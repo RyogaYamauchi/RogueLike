@@ -63,8 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\IMakeField.cs" />
-    <Compile Include="Assets\Scripts\MakeField.cs" />
+    <Compile Include="Assets\Scripts\Field.cs" />
+    <Compile Include="Assets\Scripts\FieldState.cs" />
+    <Compile Include="Assets\Scripts\Game.cs" />
+    <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\MazeController.cs" />
     <Compile Include="Assets\Scripts\Position.cs" />
     <Compile Include="Assets\Scripts\Road.cs" />
