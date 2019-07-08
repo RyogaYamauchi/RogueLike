@@ -7,14 +7,33 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
-          <e p="Field.cs" t="Include" />
-          <e p="FieldState.cs" t="Include" />
-          <e p="Game.cs" t="Include" />
-          <e p="GameState.cs" t="Include" />
-          <e p="MazeController.cs" t="Include" />
-          <e p="Position.cs" t="Include" />
-          <e p="Road.cs" t="Include" />
-          <e p="Room.cs" t="Include" />
+          <e p="Entitiy" t="Include">
+            <e p="Battle" t="Include">
+              <e p="Battle.cs" t="Include" />
+              <e p="Field.cs" t="Include" />
+              <e p="Position.cs" t="Include" />
+              <e p="Road.cs" t="Include" />
+              <e p="Room.cs" t="Include" />
+            </e>
+            <e p="Interface" t="Include" />
+          </e>
+          <e p="FrameWork" t="Include">
+            <e p="Action.cs" t="Include" />
+            <e p="Dispatcher.cs" t="Include" />
+            <e p="IAction.cs" t="Include" />
+            <e p="IDispatcher.cs" t="Include" />
+            <e p="IRegister.cs" t="Include" />
+            <e p="Register.cs" t="Include" />
+            <e p="Selecter.cs" t="Include" />
+          </e>
+          <e p="Presentation" t="Include">
+            <e p="Reducers" t="Include" />
+            <e p="Selectors" t="Include" />
+            <e p="States" t="Include">
+              <e p="FieldState.cs" t="Include" />
+              <e p="GameState.cs" t="Include" />
+            </e>
+          </e>
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
