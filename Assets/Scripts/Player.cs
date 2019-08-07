@@ -34,40 +34,67 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            if(Input.GetKeyDown(KeyCode.RightArrow))
+            if(Input.GetKey(KeyCode.D))
             {
                 MoveRight();
             }
-            if(Input.GetKeyDown(KeyCode.LeftArrow))
+            if(Input.GetKey(KeyCode.A))
             {
                 MoveLeft();
             }
-            if(Input.GetKeyDown(KeyCode.UpArrow))
+            if(Input.GetKey(KeyCode.W))
             {
                 MoveUp();
             }
-            if(Input.GetKeyDown(KeyCode.DownArrow))
+            if(Input.GetKey(KeyCode.S))
             {
                 MoveDown();
             }
-            yield return null;
+
+            yield return new WaitForSeconds(0.15f);
         }
     }
 
     public void MoveRight()
     {
+        if (OutOfRange(new Vector2Int(Position.x+1,Position.y)))
+        {
+            return;
+        }
         Position = new Vector2Int(Position.x+1,Position.y);
     }
     public void MoveLeft()
     {
+        if (OutOfRange(new Vector2Int(Position.x-1,Position.y)))
+        {
+            return;
+        }
         Position = new Vector2Int(Position.x-1,Position.y);
     }
     public void MoveUp()
     {
+        if (OutOfRange(new Vector2Int(Position.x,Position.y+1)))
+        {
+            return;
+        }
         Position = new Vector2Int(Position.x,Position.y+1);
     }
     public void MoveDown()
     {
+        if (OutOfRange(new Vector2Int(Position.x,Position.y-1)))
+        {
+            return;
+        }
         Position = new Vector2Int(Position.x,Position.y-1);
+    }
+
+    private bool OutOfRange(Vector2Int position)
+    {
+        var fieldSize = GameController.Instance.field.FieldSize;
+        if (position.x < 0) return true;
+        if (position.y < 0) return true;
+        if (position.x > fieldSize-1) return true;
+        if (position.y > fieldSize-1) return true;
+        return false;
     }
 }
