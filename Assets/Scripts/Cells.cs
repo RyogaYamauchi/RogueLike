@@ -18,6 +18,7 @@ public class Cells : MonoBehaviour
             for (var j = 0; j < FieldSize; j++)
             {
                 GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                plane.name = "cell" + id;
                 plane.transform.parent = transform; //右が親,左が子
                 plane.AddComponent<Cell>();
                 plane.GetComponent<Cell>().Id = id;
