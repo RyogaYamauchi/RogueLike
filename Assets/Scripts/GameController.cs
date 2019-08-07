@@ -1,22 +1,21 @@
 using System;
 using UnityEngine;
 
-namespace DefaultNamespace
+
+public class GameController : MonoBehaviour
 {
-    public class GameController : MonoBehaviour
-    {
-        public Field Field;
-        public GameController Instance;
-        private void Start()
+    public GameObject field;
+    public static GameController Instance;
+
+    private void Start()
+    { 
+        Field.MakeInstance();
+        field = GameObject.Find("Field");
+        field.GetComponent<Field>().Init();
+        foreach (var cell in field.GetComponent<Field>().Cells)
         {
-            GameController Instance = new GameController();
-            Field = Field.Init();
-            foreach (var cell in Field.Cells)
-            {
-                Debug.Log(cell.Id);
-            }
+            Debug.Log(cell.Position);
         }
-        
-        
+
     }
 }

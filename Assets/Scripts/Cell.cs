@@ -1,15 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    public Vector2Int Position;
+    private Vector2Int _position;
     public int Id;
     public int State;
-
-    public void Init()
+    public Vector2Int Position
     {
-        Position = new Vector2Int((int)GetComponent<Transform>().position.x, (int)GetComponent<Transform>().position.y);
+        get 
+        {
+            return _position;
+        }
+        set
+        {
+            _position = value;
+            transform.position = new Vector3(value.x*11, 0, value.y*11);
+        }
     }
 }
