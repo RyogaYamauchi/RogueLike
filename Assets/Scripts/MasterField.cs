@@ -19,7 +19,7 @@ namespace DefaultNamespace
 
         public static Color GetColor(int id)
         {
-            if(id == 1) return new Color(0.1f,0.1f,0.9f);
+//            if(id == 1) return new Color(0.1f,0.1f,0.9f);
             if(id == 2) return new Color(0.1f,0.2f,0.8f);
             if(id == 3) return new Color(0.1f,0.3f,0.7f);
             if(id == 4) return new Color(0.1f,0.4f,0.6f);

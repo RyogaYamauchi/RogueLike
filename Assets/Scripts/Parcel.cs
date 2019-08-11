@@ -3,12 +3,12 @@ namespace DefaultNamespace
     public class Parcel
     {
         /// <summary>
-        /// 部屋のID
+        /// <param name="部屋のID"></param>
         /// </summary>
-        public int Id;
+        public int ParcelId;
 
         /// <summary>
-        /// 部屋の左下のX座標
+        /// <param name="部屋の左下のX座標"></param>
         /// </summary>
         public int X;
 
@@ -18,7 +18,7 @@ namespace DefaultNamespace
         public int Y;
     
         /// <summary>
-        /// 部屋のxのながさ
+        /// <param name="xのながさ"></param>
         /// </summary>
         private int _xRange; 
         public int XRange
@@ -32,7 +32,7 @@ namespace DefaultNamespace
         }
 
         /// <summary>
-        /// //部屋のyの高さ
+        /// <param name="yのながさ"></param>
         /// </summary>
         private int _yRange;
         public int YRange
@@ -46,20 +46,26 @@ namespace DefaultNamespace
         }
 
         /// <summary>
-        /// 体積
+        /// <param name="体積"></param>
         /// </summary>
         public int Volume;
 
+
+        /// <summary>
+        /// <param name="Room"></param>
+        /// </summary>
+        public Room Room;
+
         public Parcel SetParcel(int id,int x,int y,int xRange,int yRange)
         {
-            Id = id;
+            ParcelId = id;
             X = x;
             Y = y;
             XRange = xRange;
             YRange = yRange;
             Volume = xRange * yRange;
             var Cells = GameController.Instance.field.Cells;
-            Parcel room = new Parcel();
+            Parcel parcel = new Parcel();
             for (int i = y; i < y + yRange; i++)
             {
                 for (int j = x; j < x + xRange;j++)
@@ -68,7 +74,7 @@ namespace DefaultNamespace
                     Cells.ArrayCells2D[j, i].ParcelId = id;
                 }
             }
-            return room;
+            return parcel;
         }
     }
 }

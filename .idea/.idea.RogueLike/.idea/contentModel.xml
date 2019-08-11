@@ -16,6 +16,7 @@
           <e p="MasterFieldData.cs" t="Include" />
           <e p="Parcel.cs" t="Include" />
           <e p="Player.cs" t="Include" />
+          <e p="Road.cs" t="Include" />
           <e p="Room.cs" t="Include" />
         </e>
       </e>
