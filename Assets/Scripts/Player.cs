@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -95,6 +93,8 @@ public class Player : MonoBehaviour
         if (position.y < 0) return true;
         if (position.x > fieldSize-1) return true;
         if (position.y > fieldSize-1) return true;
+        var state = GameController.Instance.field.Cells.ArrayCells2D[position.x, position.y].GetComponent<Cell>().State;
+//        if (state != MasterFieldData.floor) return true;
         return false;
     }
 }

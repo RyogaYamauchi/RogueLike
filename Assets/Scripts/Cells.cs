@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
 public class Cells : MonoBehaviour
 {
-    public List<GameObject> cells;
+//    public GameObject[] cells;
+    public Cell[,] ArrayCells2D;
     
     public void Init(int FieldSize)
     {
-        List<GameObject>_cells = new List<GameObject>();
+        ArrayCells2D = new Cell[FieldSize,FieldSize];
         int x = 0;
         int y = 0;
         int id = 0;
@@ -23,13 +23,13 @@ public class Cells : MonoBehaviour
                 plane.AddComponent<Cell>();
                 plane.GetComponent<Cell>().Id = id;
                 plane.GetComponent<Cell>().Position = new Vector2Int(x, y);
+                plane.GetComponent<Cell>().State = 0;//初期値は壁
+                ArrayCells2D[j,i] = plane.GetComponent<Cell>();
                 id++;
                 x += 1;
-                _cells.Add(plane);
             }
             y += 1;
             x = 0;
         }
-        cells = _cells;
     }
 }

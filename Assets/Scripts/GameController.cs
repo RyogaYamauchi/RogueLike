@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using UnityEngine;
 
 
@@ -19,7 +20,8 @@ public class GameController : MonoBehaviour
     }
 
     private void Start()
-    { 
+    {
+        MasterField.Init();
         Field.MakeInstance();
         field = GameObject.Find("Field").GetComponent<Field>();
         field.Init();
