@@ -13,11 +13,9 @@ public class Field : MonoBehaviour
     public Cells Cells;
     public Dictionary<int,Parcel> ParcelsDictionary;
     public Dictionary<int, Room> RoomsDictionary;
-    public Dictionary<Road, Road> RoadsDictionary;
 
     public void Init()
     {
-        RoadsDictionary = new Dictionary<Road, Road>();
         RoomsDictionary = new Dictionary<int, Room>();
         ParcelsDictionary = new Dictionary<int,Parcel>();
         GameObject cells = new GameObject("Cells");
@@ -59,10 +57,10 @@ public class Field : MonoBehaviour
             }
         }
         //Debug color
-        foreach (var cell in Cells.ArrayCells2D)
-        {
-            cell.State = cell.ParcelId;
-        }
+//        foreach (var cell in Cells.ArrayCells2D)
+//        {
+//            cell.State = cell.ParcelId;
+//        }
         //部屋の作成
         foreach (var parcel in ParcelsDictionary.Values)
         {
@@ -105,7 +103,8 @@ public class Field : MonoBehaviour
                 TargetRoom =
                     RoomsDictionary[
                         GameController.Instance.field.Cells.ArrayCells2D[currentCell.x, currentCell.y].ParcelId];
-                var road = new Road(currentRoom,TargetRoom,direction);
+//                var road = new Road(currentRoom,TargetRoom);
+                Road.SetRoad(currentRoom, TargetRoom);
                 break;
 
             }

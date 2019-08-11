@@ -70,7 +70,7 @@ namespace DefaultNamespace
             {
                 for (int j = x; j < x + xRange;j++)
                 {
-                    Cells.ArrayCells2D[j, i].State = MasterFieldData.floor;
+                    Cells.ArrayCells2D[j, i].State = MasterFieldData.wall;
                     Cells.ArrayCells2D[j, i].ParcelId = id;
                 }
             }

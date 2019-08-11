@@ -24,8 +24,17 @@ public class Player : MonoBehaviour
 
     public void Init()
     {
-        Position = new Vector2Int(0,0);
+        SetInitPosition();
         StartCoroutine(StartMove());
+    }
+
+    public void SetInitPosition()
+    {
+        var roomId = Random.Range(0, GameController.Instance.field.RoomsDictionary.Count);
+        var room = GameController.Instance.field.RoomsDictionary[roomId];
+        var x = Random.Range(room.X, room.X + room.XRange);
+        var y = Random.Range(room.Y, room.Y + room.YRange);
+        Position = new Vector2Int(x,y);
     }
 
     private IEnumerator StartMove()
@@ -94,7 +103,7 @@ public class Player : MonoBehaviour
         if (position.x > fieldSize-1) return true;
         if (position.y > fieldSize-1) return true;
         var state = GameController.Instance.field.Cells.ArrayCells2D[position.x, position.y].GetComponent<Cell>().State;
-//        if (state != MasterFieldData.floor) return true;
+        if (state != MasterFieldData.floor) return true;
         return false;
     }
 }
