@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
@@ -12,9 +13,11 @@ public class Field : MonoBehaviour
     public Cells Cells;
     public Dictionary<int,Parcel> ParcelsDictionary;
     public Dictionary<int, Room> RoomsDictionary;
+    public Dictionary<Road, Road> RoadsDictionary;
 
     public void Init()
     {
+        RoadsDictionary = new Dictionary<Road, Road>();
         RoomsDictionary = new Dictionary<int, Room>();
         ParcelsDictionary = new Dictionary<int,Parcel>();
         GameObject cells = new GameObject("Cells");
@@ -30,8 +33,8 @@ public class Field : MonoBehaviour
         var firstParcel = new Parcel();
         firstParcel.SetParcel(1, 0, 0, FieldSize, FieldSize);
         ParcelsDictionary.Add(1, firstParcel);
-//        int DivisionNum = Random.Range(4,10); //分割数(部屋数)
-        int DivisionNum = 10;
+        int DivisionNum = Random.Range(4,10); //分割数(部屋数)
+//        int DivisionNum = 10;
         for (int id = 2; id < DivisionNum+1; id++)
         {
             var currentParcel = ParcelsDictionary.Values.OrderByDescending(s => s.Volume).FirstOrDefault();
@@ -60,13 +63,55 @@ public class Field : MonoBehaviour
         {
             cell.State = cell.ParcelId;
         }
-
+        //部屋の作成
         foreach (var parcel in ParcelsDictionary.Values)
         {
             var room = new Room();
             room.Create(parcel);
             RoomsDictionary.Add(parcel.ParcelId,room);
         }
+        //道の作成
+        var Room = new Room();
+        foreach (var currentToom in RoomsDictionary.Values)
+        {
+            Vector2Int direction = new Vector2Int();
+            SetRoad(0,1,currentToom); //東
+            SetRoad(0,-1,currentToom); //西
+            SetRoad(1,0,currentToom); //北
+            SetRoad(-1,0,currentToom); //南
+//            var road = new Road(room, room);
+            
+        }
+    }
+
+    private void SetRoad(int x, int y,Room currentRoom)
+    {
+        var CenterCell = new Vector2Int(currentRoom.X + (int) Math.Floor((double) currentRoom.XRange / 2),
+            currentRoom.Y + (int) Math.Floor((double) currentRoom.YRange / 2));
+        var direction = new Vector2Int(x,y);
+        var currentCell = CenterCell;
+        var TargetRoom = new Room();
+
+        while (true)
+        {
+            currentCell += direction;
+            if(currentCell.x >= GameController.Instance.field.FieldSize) break;
+            if (currentCell.x < 0) break;
+            if(currentCell.y >= GameController.Instance.field.FieldSize) break;
+            if (currentCell.y < 0) break;
+            if (GameController.Instance.field.Cells.ArrayCells2D[currentCell.x, currentCell.y].ParcelId !=
+                currentRoom.RoomId)
+            {
+                TargetRoom =
+                    RoomsDictionary[
+                        GameController.Instance.field.Cells.ArrayCells2D[currentCell.x, currentCell.y].ParcelId];
+                var road = new Road(currentRoom,TargetRoom,direction);
+                break;
+
+            }
+            
+        }
+        
     }
 
     public static void MakeInstance()

@@ -8,7 +8,11 @@ public class Room
     public int Y;
     public int XRange;
     public int YRange;
-    public Road Road;
+    public Road SouthRoad;
+    public Road NorthRoad;
+    public Road WestRoad;
+    public Road EastToad;
+    
     public int RoomMinSize = 5;
 
     public void Create(Parcel parcel)
