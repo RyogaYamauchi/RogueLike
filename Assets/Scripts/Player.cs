@@ -8,6 +8,7 @@ namespace Scripts
 
     public class Player : ICharacter
     {
+        private bool _canGoThePosition = true;
         public void Init()
         {
             SetInitPosition();
@@ -22,35 +23,30 @@ namespace Scripts
             var y = Random.Range(room.Y, room.Y + room.YRange);
             Position = new Vector2Int(x, y);
         }
-
         private IEnumerator StartMove()
         {
             while (true)
             {
                 if (Input.GetKey(KeyCode.D))
                 {
-                    StartCoroutine(MoveRight());
-                    EndTurn();
+                    StartCoroutine(MoveRight(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
-                    StartCoroutine(MoveLeft());
-                    EndTurn();
+                    StartCoroutine(MoveLeft(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
 
                 if (Input.GetKey(KeyCode.W))
                 {
-                    StartCoroutine(MoveUp());
-                    EndTurn();
+                    StartCoroutine(MoveUp(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
 
                 if (Input.GetKey(KeyCode.S))
                 {
-                    StartCoroutine(MoveDown());
-                    EndTurn();
+                    StartCoroutine(MoveDown(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
                 yield return new WaitForSeconds(0.05f);

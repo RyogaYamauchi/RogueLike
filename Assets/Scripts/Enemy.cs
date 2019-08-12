@@ -14,7 +14,7 @@ namespace Scripts
             Id = id;
             while (true)
             {
-                var roomId = Random.Range(0, GameController.Instance.field.RoomsDictionary.Count);
+                var roomId = Random.Range(1, GameController.Instance.field.RoomsDictionary.Count);
                 if (roomId == GameController.Instance.player.CurrentRoomId) Spawn(id);
                 var room = GameController.Instance.field.RoomsDictionary[roomId];
                 var x = Random.Range(room.X, room.X + room.XRange);

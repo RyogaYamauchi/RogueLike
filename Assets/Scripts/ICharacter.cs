@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Scripts.MasterDatas;
 using UnityEngine;
@@ -26,43 +27,51 @@ namespace Scripts
             }
         }
         
-        protected IEnumerator MoveRight()
+        protected IEnumerator MoveRight(Action correctAction,Action failedAction)
         {
             if (OutOfRange(new Vector2Int(Position.x + 1, Position.y)))
             {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
                 yield break;
             }
-
             Position = new Vector2Int(Position.x + 1, Position.y);
+            correctAction?.Invoke(); 
         }
 
-        protected IEnumerator MoveLeft()
+        protected IEnumerator MoveLeft(Action correctAction,Action failedAction)
         {
             if (OutOfRange(new Vector2Int(Position.x - 1, Position.y)))
             {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
                 yield break;
             }
-
+            correctAction?.Invoke();
             Position = new Vector2Int(Position.x - 1, Position.y);
         }
 
-        protected IEnumerator MoveUp()
+        protected IEnumerator MoveUp(Action correctAction,Action failedAction)
         {
             if (OutOfRange(new Vector2Int(Position.x, Position.y + 1)))
             {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
                 yield break;
             }
-
+            correctAction?.Invoke();
             Position = new Vector2Int(Position.x, Position.y + 1);
         }
 
-        protected IEnumerator MoveDown()
+        protected IEnumerator MoveDown(Action correctAction,Action failedAction)
         {
             if (OutOfRange(new Vector2Int(Position.x, Position.y - 1)))
             {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
                 yield break;
             }
-
+            correctAction?.Invoke();
             Position = new Vector2Int(Position.x, Position.y - 1);
         }
 
@@ -76,6 +85,13 @@ namespace Scripts
             var state = GameController.Instance.field.Cells.ArrayCells2D[position.x, position.y].GetComponent<Cell>()
                 .State;
             if (state != MasterFieldData.floor) return true;
+            foreach (var enemy in GameController.Instance.enemies.EnemyDictionary.Values)
+            {
+                if (enemy.Position == position) return true;
+            }
+
+            if (GameController.Instance.player.Position == position) return true;
+            
             return false;
         }
         public IEnumerator Attack()
