@@ -8,7 +8,6 @@ namespace Scripts
 
     public class Player : ICharacter
     {
-        private bool _canGoThePosition = true;
         public void Init()
         {
             SetInitPosition();

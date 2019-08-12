@@ -77,13 +77,10 @@ namespace Scripts
             var Room = new Room();
             foreach (var currentToom in RoomsDictionary.Values)
             {
-                Vector2Int direction = new Vector2Int();
                 SetRoad(0, 1, currentToom); //東
                 SetRoad(0, -1, currentToom); //西
                 SetRoad(1, 0, currentToom); //北
                 SetRoad(-1, 0, currentToom); //南
-//            var road = new Road(room, room);
-
             }
         }
 
