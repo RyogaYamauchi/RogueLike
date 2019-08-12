@@ -1,31 +1,37 @@
 using System;
-using DefaultNamespace;
+using Scripts.MasterDatas;
 using UnityEngine;
 
-
-public class GameController : MonoBehaviour
+namespace Scripts
 {
-    public Field field;
-    public Player player;
-
-    public static GameController Instance { get; private set; }
-
-
-    private void Awake()
+    public class GameController : MonoBehaviour
     {
-        if (Instance == null)
+        public Field field;
+        public Player player;
+        public Enemies enemies;
+        
+        public static GameController Instance { get; private set; }
+
+
+        private void Awake()
         {
-            Instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
         }
-    }
 
-    private void Start()
-    {
-        MasterField.Init();
-        Field.MakeInstance();
-        field = GameObject.Find("Field").GetComponent<Field>();
-        field.Init();
-        player = GameObject.Find("Player").GetComponent<Player>();
-        player.Init();
+        private void Start()
+        {
+            MasterField.Init();
+            Field.MakeInstance();
+            field = GameObject.Find("Field").GetComponent<Field>();
+            field.Init();
+            player = GameObject.Find("Player").GetComponent<Player>();
+            player.Init();
+            enemies = GameObject.Find("Enemies").GetComponent<Enemies>();
+            enemies.Init();
+            Instance.enemies.SpawnEnemy();
+        }
     }
 }

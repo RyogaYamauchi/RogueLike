@@ -1,4 +1,6 @@
-namespace DefaultNamespace
+using Scripts.MasterDatas;
+
+namespace Scripts
 {
     public class Parcel
     {

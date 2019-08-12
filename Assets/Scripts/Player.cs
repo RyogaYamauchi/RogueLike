@@ -1,109 +1,76 @@
 using System.Collections;
+using Scripts.MasterDatas;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace Scripts
 {
-    private Vector2Int _position;
-    public int Attack;
-    public int Defense;
 
-    public Vector2Int Position
+
+    public class Player : ICharacter
     {
-        get
+        public void Init()
         {
-            return _position;
-            
+            SetInitPosition();
+            StartTurn();
         }
-        set
+
+        public void SetInitPosition()
         {
-            _position = value;
-            transform.position = new Vector3(value.x*11,5,value.y*11);
+            var roomId = Random.Range(0, GameController.Instance.field.RoomsDictionary.Count);
+            var room = GameController.Instance.field.RoomsDictionary[roomId];
+            var x = Random.Range(room.X, room.X + room.XRange);
+            var y = Random.Range(room.Y, room.Y + room.YRange);
+            Position = new Vector2Int(x, y);
         }
-    }
-    
 
-    public void Init()
-    {
-        SetInitPosition();
-        StartCoroutine(StartMove());
-    }
-
-    public void SetInitPosition()
-    {
-        var roomId = Random.Range(0, GameController.Instance.field.RoomsDictionary.Count);
-        var room = GameController.Instance.field.RoomsDictionary[roomId];
-        var x = Random.Range(room.X, room.X + room.XRange);
-        var y = Random.Range(room.Y, room.Y + room.YRange);
-        Position = new Vector2Int(x,y);
-    }
-
-    private IEnumerator StartMove()
-    {
-        while (true)
+        private IEnumerator StartMove()
         {
-            if(Input.GetKey(KeyCode.D))
+            while (true)
             {
-                MoveRight();
-            }
-            if(Input.GetKey(KeyCode.A))
-            {
-                MoveLeft();
-            }
-            if(Input.GetKey(KeyCode.W))
-            {
-                MoveUp();
-            }
-            if(Input.GetKey(KeyCode.S))
-            {
-                MoveDown();
-            }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    StartCoroutine(MoveRight());
+                    EndTurn();
+                    yield break;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    StartCoroutine(MoveLeft());
+                    EndTurn();
+                    yield break;
+                }
 
-            yield return new WaitForSeconds(0.15f);
-        }
-    }
+                if (Input.GetKey(KeyCode.W))
+                {
+                    StartCoroutine(MoveUp());
+                    EndTurn();
+                    yield break;
+                }
 
-    public void MoveRight()
-    {
-        if (OutOfRange(new Vector2Int(Position.x+1,Position.y)))
-        {
-            return;
+                if (Input.GetKey(KeyCode.S))
+                {
+                    StartCoroutine(MoveDown());
+                    EndTurn();
+                    yield break;
+                }
+                yield return new WaitForSeconds(0.05f);
+            }
         }
-        Position = new Vector2Int(Position.x+1,Position.y);
-    }
-    public void MoveLeft()
-    {
-        if (OutOfRange(new Vector2Int(Position.x-1,Position.y)))
-        {
-            return;
-        }
-        Position = new Vector2Int(Position.x-1,Position.y);
-    }
-    public void MoveUp()
-    {
-        if (OutOfRange(new Vector2Int(Position.x,Position.y+1)))
-        {
-            return;
-        }
-        Position = new Vector2Int(Position.x,Position.y+1);
-    }
-    public void MoveDown()
-    {
-        if (OutOfRange(new Vector2Int(Position.x,Position.y-1)))
-        {
-            return;
-        }
-        Position = new Vector2Int(Position.x,Position.y-1);
-    }
 
-    private bool OutOfRange(Vector2Int position)
-    {
-        var fieldSize = GameController.Instance.field.FieldSize;
-        if (position.x < 0) return true;
-        if (position.y < 0) return true;
-        if (position.x > fieldSize-1) return true;
-        if (position.y > fieldSize-1) return true;
-        var state = GameController.Instance.field.Cells.ArrayCells2D[position.x, position.y].GetComponent<Cell>().State;
-        if (state != MasterFieldData.floor) return true;
-        return false;
+        public void StartTurn()
+        {
+            Debug.Log("プレイヤーのターン");
+            StartCoroutine(StartMove());
+        }
+
+        public void EndTurn()
+        {
+           GameController.Instance.enemies.StartTurn();
+        }
+
+        private bool IsPuting()
+        {
+            return Input.anyKey;
+        }
     }
 }

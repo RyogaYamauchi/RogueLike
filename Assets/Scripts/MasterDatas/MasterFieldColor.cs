@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Scripts.MasterDatas
 {
     public class MasterFieldColor
     {

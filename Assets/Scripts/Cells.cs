@@ -1,35 +1,41 @@
 ﻿using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 
-public class Cells : MonoBehaviour
+namespace Scripts
 {
-//    public GameObject[] cells;
-    public Cell[,] ArrayCells2D;
-    
-    public void Init(int FieldSize)
+
+
+
+    public class Cells : MonoBehaviour
     {
-        ArrayCells2D = new Cell[FieldSize,FieldSize];
-        int x = 0;
-        int y = 0;
-        int id = 0;
-        for (var i = 0; i < FieldSize; i++)
+//    public GameObject[] cells;
+        public Cell[,] ArrayCells2D;
+
+        public void Init(int FieldSize)
         {
-            for (var j = 0; j < FieldSize; j++)
+            ArrayCells2D = new Cell[FieldSize, FieldSize];
+            int x = 0;
+            int y = 0;
+            int id = 0;
+            for (var i = 0; i < FieldSize; i++)
             {
-                GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                plane.name = "cell" + id;
-                plane.transform.parent = transform; //右が親,左が子
-                plane.AddComponent<Cell>();
-                plane.GetComponent<Cell>().Id = id;
-                plane.GetComponent<Cell>().Position = new Vector2Int(x, y);
-                plane.GetComponent<Cell>().State = 0;//初期値は壁
-                ArrayCells2D[j,i] = plane.GetComponent<Cell>();
-                id++;
-                x += 1;
+                for (var j = 0; j < FieldSize; j++)
+                {
+                    GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                    plane.name = "cell" + id;
+                    plane.transform.parent = transform; //右が親,左が子
+                    plane.AddComponent<Cell>();
+                    plane.GetComponent<Cell>().Id = id;
+                    plane.GetComponent<Cell>().Position = new Vector2Int(x, y);
+                    plane.GetComponent<Cell>().State = 0; //初期値は壁
+                    ArrayCells2D[j, i] = plane.GetComponent<Cell>();
+                    id++;
+                    x += 1;
+                }
+
+                y += 1;
+                x = 0;
             }
-            y += 1;
-            x = 0;
         }
     }
 }

@@ -9,11 +9,16 @@
         <e p="Scripts" t="Include">
           <e p="Cell.cs" t="Include" />
           <e p="Cells.cs" t="Include" />
+          <e p="Enemies.cs" t="Include" />
+          <e p="Enemy.cs" t="Include" />
           <e p="Field.cs" t="Include" />
           <e p="GameController.cs" t="Include" />
-          <e p="MasterField.cs" t="Include" />
-          <e p="MasterFieldColor.cs" t="Include" />
-          <e p="MasterFieldData.cs" t="Include" />
+          <e p="ICharacter.cs" t="Include" />
+          <e p="MasterDatas" t="Include">
+            <e p="MasterField.cs" t="Include" />
+            <e p="MasterFieldColor.cs" t="Include" />
+            <e p="MasterFieldData.cs" t="Include" />
+          </e>
           <e p="Parcel.cs" t="Include" />
           <e p="Player.cs" t="Include" />
           <e p="Road.cs" t="Include" />
