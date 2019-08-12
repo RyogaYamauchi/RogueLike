@@ -16,7 +16,7 @@ namespace Scripts
 
         public void SetInitPosition()
         {
-            var roomId = Random.Range(0, GameController.Instance.field.RoomsDictionary.Count);
+            var roomId = Random.Range(1, GameController.Instance.field.RoomsDictionary.Count);
             var room = GameController.Instance.field.RoomsDictionary[roomId];
             var x = Random.Range(room.X, room.X + room.XRange);
             var y = Random.Range(room.Y, room.Y + room.YRange);
