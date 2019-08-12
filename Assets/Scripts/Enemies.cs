@@ -33,6 +33,7 @@ namespace Scripts
         public void StartTurn()
         {
             Debug.Log("敵のターン");
+            if(Random.Range(0,100) < 5) SpawnEnemy();
             var count = 1;
             foreach (var enemy in EnemyDictionary.Values)
             {

@@ -1,5 +1,4 @@
 using System.Collections;
-using Scripts.MasterDatas;
 using UnityEngine;
 
 namespace Scripts
@@ -61,11 +60,6 @@ namespace Scripts
         public void EndTurn()
         {
            GameController.Instance.enemies.StartTurn();
-        }
-
-        private bool IsPuting()
-        {
-            return Input.anyKey;
         }
     }
 }

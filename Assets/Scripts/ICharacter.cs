@@ -22,7 +22,7 @@ namespace Scripts
             set
             {
                 _position = value;
-                CurrentRoomId = GameController.Instance.field.Cells.ArrayCells2D[value.x, value.y].State;
+                CurrentRoomId = GameController.Instance.field.Cells.ArrayCells2D[value.x, value.y].ParcelId;
                 transform.position = new Vector3(value.x * 11, 5, value.y * 11);
             }
         }
@@ -31,6 +31,7 @@ namespace Scripts
         {
             if (OutOfRange(new Vector2Int(Position.x + 1, Position.y)))
             {
+                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
@@ -43,6 +44,7 @@ namespace Scripts
         {
             if (OutOfRange(new Vector2Int(Position.x - 1, Position.y)))
             {
+                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
@@ -55,6 +57,7 @@ namespace Scripts
         {
             if (OutOfRange(new Vector2Int(Position.x, Position.y + 1)))
             {
+                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
@@ -67,6 +70,7 @@ namespace Scripts
         {
             if (OutOfRange(new Vector2Int(Position.x, Position.y - 1)))
             {
+                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
