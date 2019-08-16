@@ -31,17 +31,29 @@ namespace Scripts
                     StartCoroutine(MoveRight(
                             () =>
                             {
+                                if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
+                                    MasterFieldData.stair)
+                                {
+                                    StartCoroutine(GameController.Instance.field.GoUpTheStair());
+                                    return;
+                                }
                                 GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
                                     MasterFieldOnState.None;
                                 GameController.Instance.field.Cells.ArrayCells2D[Position.x+1, Position.y].OnState =
                                     MasterFieldOnState.Player;
-                        EndTurn(); }, 
+                                EndTurn(); }, 
                             () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
                     StartCoroutine(MoveLeft(() => { 
+                        if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
+                            MasterFieldData.stair)
+                        {
+                            StartCoroutine(GameController.Instance.field.GoUpTheStair());
+                            return;
+                        }
                         GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
                             MasterFieldOnState.None;
                         GameController.Instance.field.Cells.ArrayCells2D[Position.x-1, Position.y].OnState =
@@ -55,6 +67,12 @@ namespace Scripts
                 {
                     StartCoroutine(MoveUp(() =>
                     {
+                        if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
+                            MasterFieldData.stair)
+                        {
+                            StartCoroutine(GameController.Instance.field.GoUpTheStair());
+                            return;
+                        }
                         GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
                             MasterFieldOnState.None;
                         GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y+1].OnState =
@@ -67,6 +85,12 @@ namespace Scripts
                 {
                     StartCoroutine(MoveDown(() =>
                     {
+                        if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
+                            MasterFieldData.stair)
+                        {
+                            StartCoroutine(GameController.Instance.field.GoUpTheStair());
+                            return;
+                        }
                         GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
                             MasterFieldOnState.None;
                         GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y-1].OnState =

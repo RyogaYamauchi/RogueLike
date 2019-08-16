@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,9 +12,21 @@ namespace Scripts
 
         public void Init()
         {
-            EnemyDictionary= new Dictionary<int, Enemy>();
+            InitEnemies();
             _id = 1;
             MaxEnemyCount = 7;
+        }
+
+        public void InitEnemies()
+        {
+            if (EnemyDictionary != null)
+            {
+                foreach (var enemy in EnemyDictionary.Values)
+                {
+                    enemy.Die();
+                }
+            }
+            EnemyDictionary= new Dictionary<int, Enemy>();
         }
 
         public void SpawnEnemy()
@@ -29,12 +42,17 @@ namespace Scripts
             instance.GetComponent<Enemy>().Hp = 5;
             instance.GetComponent<Enemy>().AttackPower = 5;
             instance.GetComponent<Enemy>().DefensePower = 5;
+            instance.GetComponent<Enemy>().Name = enemy.asset.name;
             _id++;
         }
 
         public void StartTurn()
         {
             Debug.Log("敵のターン");
+            if (EnemyDictionary.Count == 0)
+            {
+                StartCoroutine(EndTurn(0.5f));
+            }
 //            if(Random.Range(0,100) < 5 && EnemyDictionary.Values.Count<MaxEnemyCount) SpawnEnemy();
             var count = 1;
             foreach (var enemy in EnemyDictionary.Values)
@@ -43,15 +61,16 @@ namespace Scripts
                 {
                     if (count == EnemyDictionary.Count)
                     {
-                        EndTurn();
+                        StartCoroutine(EndTurn(0));
                     }
                     count++;
                 }));
             }
         }
 
-        public void EndTurn()
+        public IEnumerator EndTurn(float lateTime)
         {
+            yield return new WaitForSeconds(lateTime);
             GameController.Instance.player.StartTurn();
         }
     }

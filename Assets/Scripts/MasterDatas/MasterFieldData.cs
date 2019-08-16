@@ -6,5 +6,6 @@ namespace Scripts.MasterDatas
         public static readonly int wall = 0;
         public static readonly int floor = 1;
         public static readonly int wator = 2;
+        public static readonly int stair = 3;
     }
 }

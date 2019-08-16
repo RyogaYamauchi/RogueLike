@@ -36,5 +36,22 @@ namespace Scripts
                 x = 0;
             }
         }
+
+        public void Clear(int FieldSize)
+        {
+            int x = 0;
+            int y = 0;
+            for (var i = 0; i < FieldSize; i++)
+            {
+                for (var j = 0; j < FieldSize; j++)
+                {
+                    ArrayCells2D[j,i].State = MasterFieldData.wall; //初期値は壁
+                    ArrayCells2D[j,i].OnState = MasterFieldOnState.None;
+                    x += 1;
+                }
+                y += 1;
+                x = 0;
+            }
+        }
     }
 }

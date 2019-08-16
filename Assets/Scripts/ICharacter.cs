@@ -87,7 +87,7 @@ namespace Scripts
             if (position.y > fieldSize - 1) return true;
             var state = GameController.Instance.field.Cells.ArrayCells2D[position.x, position.y].GetComponent<Cell>()
                 .State;
-            if (state != MasterFieldData.floor) return true;
+            if (state != MasterFieldData.floor && state!= MasterFieldData.stair) return true;
             foreach (var enemy in GameController.Instance.enemies.EnemyDictionary.Values)
             {
                 if (enemy.Position == position) return true;

@@ -11,6 +11,7 @@ namespace Scripts
 {
     public class Enemy : ICharacter
     {
+        public string Name;
         public int Id;
         public Vector2Int TargetPosition;
         Queue<Vector2Int> RootQueue;
@@ -36,6 +37,8 @@ namespace Scripts
             }
             // TODO : ルート上に何もなく通れる時に再計算しないように
             RootQueue = GetRoute();
+            
+            if(RootQueue.Count == 0){Debug.Log("バグ");}
 
             //同じ部屋にプレイヤーがいるとき
             if (RootQueue.Peek() == GameController.Instance.player.Position)
@@ -75,8 +78,14 @@ namespace Scripts
             var targetPositionX = Random.Range(room.X, room.X + room.XRange);
             var targetPositionY = Random.Range(room.Y, room.Y + room.YRange);
             if (cells[targetPositionX, targetPositionY].State != MasterFieldData.floor) RandomPosition(roomId);
-            if (cells[targetPositionX, targetPositionY].Position == Position) RandomPosition(roomId);
-            return new Vector2Int(targetPositionX,targetPositionY);
+            if (targetPositionX == Position.x && targetPositionY == Position.y) RandomPosition(roomId);
+            return new Vector2Int(targetPositionX, targetPositionY);
+        }
+
+        public void Die()
+        {
+            var obj = GameObject.Find(Name + "(Clone)");
+            Destroy(obj);
         }
     }
 }

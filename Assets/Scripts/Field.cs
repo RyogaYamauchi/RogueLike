@@ -1,14 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Scripts.MasterDatas;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Scripts
 {
-
-
-
     public class Field : MonoBehaviour
     {
         [SerializeField] public int FieldSize = 30;
@@ -27,6 +26,36 @@ namespace Scripts
             cells.GetComponent<Cells>().Init(FieldSize);
             Cells = cells.GetComponent<Cells>();
             CreateField();
+            CreateStair();
+        }
+
+        public IEnumerator GoUpTheStair()
+        {
+            yield return new WaitForSeconds(2.0f);
+            RoomsDictionary.Clear();
+            ParcelsDictionary.Clear();
+            Cells.Clear(FieldSize);
+            CreateField();
+            CreateStair();
+            GameController.Instance.enemies.InitEnemies();
+            GameController.Instance.player.Init();
+        }
+
+        void CreateStair()
+        {
+            var roomId = Random.Range(1, RoomsDictionary.Count - 1);
+            var room = RoomsDictionary[roomId];
+            var x = Random.Range(room.X, room.X + room.XRange);
+            var y = Random.Range(room.Y, room.Y + room.YRange);
+            if (Cells.ArrayCells2D[x, y].State == MasterFieldData.floor &&
+                Cells.ArrayCells2D[x, y].OnState == MasterFieldOnState.None)
+            {
+                Cells.ArrayCells2D[x, y].State = MasterFieldData.stair;
+            }
+            else
+            {
+                CreateStair();
+            }
         }
 
         void CreateField()
@@ -35,7 +64,6 @@ namespace Scripts
             firstParcel.SetParcel(1, 0, 0, FieldSize, FieldSize);
             ParcelsDictionary.Add(1, firstParcel);
             int DivisionNum = Random.Range(4, 10); //分割数(部屋数)
-//        int DivisionNum = 10;
             for (int id = 2; id < DivisionNum + 1; id++)
             {
                 var currentParcel = ParcelsDictionary.Values.OrderByDescending(s => s.Volume).FirstOrDefault();
@@ -105,7 +133,6 @@ namespace Scripts
                     TargetRoom =
                         RoomsDictionary[
                             GameController.Instance.field.Cells.ArrayCells2D[currentCell.x, currentCell.y].ParcelId];
-//                var road = new Road(currentRoom,TargetRoom);
                     Road.SetRoad(currentRoom, TargetRoom);
                     break;
 
