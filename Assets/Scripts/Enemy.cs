@@ -82,7 +82,7 @@ namespace Scripts
 
         public bool Die()
         {
-//            var obj = GameObject.Find(Name + "(Clone)");
+//            var obj = GameObjecw.Find(Name + "(Clone)");
             Destroy(gameObject);
             return true;
         }

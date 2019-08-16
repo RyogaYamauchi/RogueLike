@@ -22,6 +22,7 @@ namespace Scripts
             var y = Random.Range(room.Y, room.Y + room.YRange);
             Position = new Vector2Int(x, y);
         }
+
         private IEnumerator StartMove()
         {
             while (true)
@@ -29,78 +30,52 @@ namespace Scripts
                 if (Input.GetKey(KeyCode.D))
                 {
                     StartCoroutine(MoveRight(
-                            () =>
-                            {
-                                if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
-                                    MasterFieldData.stair)
-                                {
-                                    StartCoroutine(GameController.Instance.field.GoUpTheStair());
-                                    return;
-                                }
-                                GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
-                                    MasterFieldOnState.None;
-                                GameController.Instance.field.Cells.ArrayCells2D[Position.x+1, Position.y].OnState =
-                                    MasterFieldOnState.Player;
-                                EndTurn(); }, 
-                            () => { StartCoroutine(StartMove()); }));
+                        () => { CorrectCallback(1,0); },
+                        () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
+
                 if (Input.GetKey(KeyCode.A))
                 {
-                    StartCoroutine(MoveLeft(() => { 
-                        if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
-                            MasterFieldData.stair)
-                        {
-                            StartCoroutine(GameController.Instance.field.GoUpTheStair());
-                            return;
-                        }
-                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
-                            MasterFieldOnState.None;
-                        GameController.Instance.field.Cells.ArrayCells2D[Position.x-1, Position.y].OnState =
-                            MasterFieldOnState.Player;
-                    EndTurn(); 
-                    }, () => { StartCoroutine(StartMove()); }));
+                    StartCoroutine(MoveLeft(
+                        () => { CorrectCallback(-1,0); },
+                        () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
 
                 if (Input.GetKey(KeyCode.W))
                 {
-                    StartCoroutine(MoveUp(() =>
-                    {
-                        if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
-                            MasterFieldData.stair)
-                        {
-                            StartCoroutine(GameController.Instance.field.GoUpTheStair());
-                            return;
-                        }
-                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
-                            MasterFieldOnState.None;
-                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y+1].OnState =
-                            MasterFieldOnState.Player;
-                        EndTurn();
-                    }, () => { StartCoroutine(StartMove()); }));
+                    StartCoroutine(MoveUp(
+                        () => { CorrectCallback(0,+1); },
+                        () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
+
                 if (Input.GetKey(KeyCode.S))
                 {
-                    StartCoroutine(MoveDown(() =>
-                    {
-                        if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
-                            MasterFieldData.stair)
-                        {
-                            StartCoroutine(GameController.Instance.field.GoUpTheStair());
-                            return;
-                        }
-                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
-                            MasterFieldOnState.None;
-                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y-1].OnState =
-                            MasterFieldOnState.Player;
-                        EndTurn();
-                    }, () => { StartCoroutine(StartMove()); }));
+                    StartCoroutine(MoveDown(
+                        () => { CorrectCallback(0,-1); }, 
+                        () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
                 yield return new WaitForSeconds(0.05f);
             }
+        }
+
+        private void CorrectCallback(int dx, int dy)
+        {
+            if (GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].State ==
+                MasterFieldData.stair)
+            {
+                StartCoroutine(GameController.Instance.field.GoUpTheStair());
+                return;
+            }
+
+            GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
+                MasterFieldOnState.None;
+            GameController.Instance.field.Cells.ArrayCells2D[Position.x+dx, Position.y+dy].OnState =
+                MasterFieldOnState.Player;
+            EndTurn();
         }
 
         public void StartTurn()
