@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Scripts
@@ -19,13 +20,15 @@ namespace Scripts
 
         public void InitEnemies()
         {
-            if (EnemyDictionary != null)
-            {
-                foreach (var enemy in EnemyDictionary.Values)
-                {
-                    enemy.Die();
-                }
-            }
+            var enemies = GetComponentsInChildren<Enemy>();
+            enemies.All(t => t.Die());
+//            if (EnemyDictionary != null)
+//            {
+//                foreach (var enemy in EnemyDictionary.Values)
+//                {
+//                    enemy.Die();
+//                }
+//            }
             EnemyDictionary= new Dictionary<int, Enemy>();
         }
 
@@ -36,13 +39,13 @@ namespace Scripts
             var instance = (GameObject)Instantiate(enemy.asset,
                 new Vector3(0.0f, 0.0f, 0.0f),
                 Quaternion.identity);
+            instance.transform.parent = transform;
             EnemyDictionary.Add(_id,instance.GetComponent<Enemy>());
             instance.GetComponent<Enemy>().Spawn(_id);
             instance.GetComponent<Enemy>().Id = _id;
             instance.GetComponent<Enemy>().Hp = 5;
             instance.GetComponent<Enemy>().AttackPower = 5;
             instance.GetComponent<Enemy>().DefensePower = 5;
-            instance.GetComponent<Enemy>().Name = enemy.asset.name;
             _id++;
         }
 

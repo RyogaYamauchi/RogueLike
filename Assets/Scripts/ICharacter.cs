@@ -7,8 +7,7 @@ namespace Scripts
 {
     public class ICharacter : MonoBehaviour
     {
-        private int Id;
-        
+        public int Id;
         Vector2Int _position;
         public int CurrentRoomId;
         public int AttackPower;

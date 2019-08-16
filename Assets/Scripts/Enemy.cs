@@ -11,8 +11,6 @@ namespace Scripts
 {
     public class Enemy : ICharacter
     {
-        public string Name;
-        public int Id;
         public Vector2Int TargetPosition;
         Queue<Vector2Int> RootQueue;
         public void Spawn(int id)
@@ -82,10 +80,11 @@ namespace Scripts
             return new Vector2Int(targetPositionX, targetPositionY);
         }
 
-        public void Die()
+        public bool Die()
         {
-            var obj = GameObject.Find(Name + "(Clone)");
-            Destroy(obj);
+//            var obj = GameObject.Find(Name + "(Clone)");
+            Destroy(gameObject);
+            return true;
         }
     }
 }
