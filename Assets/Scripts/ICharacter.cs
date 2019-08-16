@@ -77,6 +77,51 @@ namespace Scripts
             Position = new Vector2Int(Position.x, Position.y - 1);
         }
 
+        protected IEnumerator UpperRight(Action correctAction, Action failedAction)
+        {
+            if (OutOfRange(new Vector2Int(Position.x+1, Position.y + 1)))
+            {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
+                yield break;
+            }
+            correctAction?.Invoke();
+            Position = new Vector2Int(Position.x + 1, Position.y + 1);
+        }
+        protected IEnumerator UpperLeft(Action correctAction, Action failedAction)
+        {
+            if (OutOfRange(new Vector2Int(Position.x - 1, Position.y + 1)))
+            {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
+                yield break;
+            }
+            correctAction?.Invoke();
+            Position = new Vector2Int(Position.x - 1, Position.y + 1);
+        }
+        protected IEnumerator BotttomRight(Action correctAction, Action failedAction)
+        {
+            if (OutOfRange(new Vector2Int(Position.x + 1, Position.y - 1)))
+            {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
+                yield break;
+            }
+            correctAction?.Invoke();
+            Position = new Vector2Int(Position.x + 1, Position.y - 1);
+        }
+        protected IEnumerator BottomLeft(Action correctAction, Action failedAction)
+        {
+            if (OutOfRange(new Vector2Int(Position.x - 1, Position.y - 1)))
+            {
+                yield return new WaitForSeconds(0.3f);
+                failedAction?.Invoke();
+                yield break;
+            }
+            correctAction?.Invoke();
+            Position = new Vector2Int(Position.x - 1, Position.y - 1);
+        }
+
         public static bool OutOfRange(Vector2Int position)
         {
             var fieldSize = GameController.Instance.field.FieldSize;
