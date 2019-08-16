@@ -1,4 +1,5 @@
 using System.Collections;
+using Scripts.MasterDatas;
 using UnityEngine;
 
 namespace Scripts
@@ -27,24 +28,51 @@ namespace Scripts
             {
                 if (Input.GetKey(KeyCode.D))
                 {
-                    StartCoroutine(MoveRight(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
+                    StartCoroutine(MoveRight(
+                            () =>
+                            {
+                                GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
+                                    MasterFieldOnState.None;
+                                GameController.Instance.field.Cells.ArrayCells2D[Position.x+1, Position.y].OnState =
+                                    MasterFieldOnState.Player;
+                        EndTurn(); }, 
+                            () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
-                    StartCoroutine(MoveLeft(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
+                    StartCoroutine(MoveLeft(() => { 
+                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
+                            MasterFieldOnState.None;
+                        GameController.Instance.field.Cells.ArrayCells2D[Position.x-1, Position.y].OnState =
+                            MasterFieldOnState.Player;
+                    EndTurn(); 
+                    }, () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
 
                 if (Input.GetKey(KeyCode.W))
                 {
-                    StartCoroutine(MoveUp(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
+                    StartCoroutine(MoveUp(() =>
+                    {
+                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
+                            MasterFieldOnState.None;
+                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y+1].OnState =
+                            MasterFieldOnState.Player;
+                        EndTurn();
+                    }, () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
-
                 if (Input.GetKey(KeyCode.S))
                 {
-                    StartCoroutine(MoveDown(() => { EndTurn(); }, () => { StartCoroutine(StartMove()); }));
+                    StartCoroutine(MoveDown(() =>
+                    {
+                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
+                            MasterFieldOnState.None;
+                        GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y-1].OnState =
+                            MasterFieldOnState.Player;
+                        EndTurn();
+                    }, () => { StartCoroutine(StartMove()); }));
                     yield break;
                 }
                 yield return new WaitForSeconds(0.05f);

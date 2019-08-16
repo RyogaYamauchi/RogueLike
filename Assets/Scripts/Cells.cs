@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Scripts.MasterDatas;
 using UnityEngine;
 
 namespace Scripts
@@ -27,7 +28,8 @@ namespace Scripts
                     plane.AddComponent<Cell>();
                     plane.GetComponent<Cell>().Id = id;
                     plane.GetComponent<Cell>().Position = new Vector2Int(x, y);
-                    plane.GetComponent<Cell>().State = 0; //初期値は壁
+                    plane.GetComponent<Cell>().State = MasterFieldData.wall; //初期値は壁
+                    plane.GetComponent<Cell>().OnState = MasterFieldOnState.None;
                     ArrayCells2D[j, i] = plane.GetComponent<Cell>();
                     id++;
                     x += 1;

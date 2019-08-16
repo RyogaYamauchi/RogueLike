@@ -7,11 +7,13 @@ namespace Scripts
     {
         public Dictionary<int, Enemy> EnemyDictionary;
         private int _id;
+        public int MaxEnemyCount;
 
         public void Init()
         {
             EnemyDictionary= new Dictionary<int, Enemy>();
             _id = 1;
+            MaxEnemyCount = 7;
         }
 
         public void SpawnEnemy()
@@ -33,7 +35,7 @@ namespace Scripts
         public void StartTurn()
         {
             Debug.Log("敵のターン");
-            if(Random.Range(0,100) < 5) SpawnEnemy();
+//            if(Random.Range(0,100) < 5 && EnemyDictionary.Values.Count<MaxEnemyCount) SpawnEnemy();
             var count = 1;
             foreach (var enemy in EnemyDictionary.Values)
             {

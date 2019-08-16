@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Scripts.MasterDatas;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Scripts
 {
@@ -16,7 +15,7 @@ namespace Scripts
         public int DefensePower;
         public int Hp;
 
-        protected Vector2Int Position
+        public Vector2Int Position
         {
             get { return _position; }
             set
@@ -79,7 +78,7 @@ namespace Scripts
             Position = new Vector2Int(Position.x, Position.y - 1);
         }
 
-        protected bool OutOfRange(Vector2Int position)
+        public static bool OutOfRange(Vector2Int position)
         {
             var fieldSize = GameController.Instance.field.FieldSize;
             if (position.x < 0) return true;

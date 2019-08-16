@@ -12,6 +12,7 @@ namespace Scripts
         private Vector2Int _position;
         private int _state;
         public int Id;
+        public int OnState;
 
         public Vector2Int Position
         {
