@@ -4,9 +4,6 @@ using UnityEngine;
 
 namespace Scripts
 {
-
-
-
     public class Cells : MonoBehaviour
     {
 //    public GameObject[] cells;

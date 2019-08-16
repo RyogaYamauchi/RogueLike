@@ -46,16 +46,14 @@ namespace Scripts
             //部屋にプレイヤーがいない時
             else
             {
-                if (RootQueue.Peek() == Position)
+                Debug.Log($"今が{Position}, ターゲットが {TargetPosition} , 移動するぜ！ {RootQueue.Peek()}");
+                Position = RootQueue.Dequeue();
+                if (RootQueue.Count == 0)
                 {
                     TargetPosition = RandomPosition(CurrentRoomId);
                 }
-                else
-                {
-                    Position = RootQueue.Dequeue();
-                }
             }
-            
+
             yield return new WaitForSeconds(0.5f);
             action?.Invoke();
         }

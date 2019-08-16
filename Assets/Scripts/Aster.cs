@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using Scripts.MasterDatas;
 using UnityEngine;
 using UnityEngine.UIElements;
+///
+/// 参考 : https://github.com/baobao/UnityAstarSample/tree/master/Assets/Astar
+///       https://qiita.com/2dgames_jp/items/f29e915357c1decbc4b7
+///
 
 namespace Scripts
 {
