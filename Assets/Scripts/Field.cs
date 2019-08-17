@@ -31,6 +31,7 @@ namespace Scripts
 
         public IEnumerator GoUpTheStair()
         {
+            //階段を登った時のロード時間
             yield return new WaitForSeconds(2.0f);
             RoomsDictionary.Clear();
             ParcelsDictionary.Clear();

@@ -52,7 +52,8 @@ namespace Scripts
                     TargetPosition = RandomPosition(CurrentRoomId);
                 }
             }
-
+            
+            //敵の移動時間
             yield return new WaitForSeconds(0.5f);
             action?.Invoke();
         }
@@ -101,48 +102,64 @@ namespace Scripts
             
             if (dx == 1 && dy == 1) //upperright
             {
-                StartCoroutine(UpperRight(() => { CorrectCallBack(1, 1); }, () => { }));
+                StartCoroutine(UpperRight(() => { CorrectCallBack(1, 1); },
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
 
             else if (dx == -1 && dy == 1) //upperleft
             {
-                StartCoroutine(UpperLeft(() => { CorrectCallBack(-1, 1); }, () => { }));
+                StartCoroutine(UpperLeft(() => { CorrectCallBack(-1, 1); }, 
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
 
             else if (dx == -1 && dy == -1) //bottomleft
             {
-                StartCoroutine(BottomLeft(() => { CorrectCallBack(-1, -1); }, () => { }));
+                StartCoroutine(BottomLeft(() => { CorrectCallBack(-1, -1); },
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
 
             else if (dx == 1 && dy == -1) //bottomright
             {
-                StartCoroutine(BotttomRight(() => { CorrectCallBack(1, -1); }, () => { }));
+                StartCoroutine(BottomRight(() => { CorrectCallBack(1, -1); }, 
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
             else if (dx == 1) //right
             {
-                StartCoroutine(MoveRight(() => { CorrectCallBack(1, 0); }, () => { }));
+                StartCoroutine(MoveRight(() => { CorrectCallBack(1, 0); }, 
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
 
             else if (dx == -1) //left
             {
-                StartCoroutine(MoveLeft(() => { CorrectCallBack(-1, 0); }, () => { }));
+                StartCoroutine(MoveLeft(() => { CorrectCallBack(-1, 0); }, 
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
 
             else if (dy == 1) //up
             {
-                StartCoroutine(MoveUp(() => { CorrectCallBack(0, 1); }, () => { }));
+                StartCoroutine(MoveUp(() => { CorrectCallBack(0, 1); },
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
 
             else if (dy == -1) //down
             {
-                StartCoroutine(MoveDown(() => { CorrectCallBack(0, -1); }, () => { }));
+                StartCoroutine(MoveDown(() => { CorrectCallBack(0, -1); }, 
+                    () => { },
+                    gameObject));
                 RootQueue.Dequeue();
             }
 

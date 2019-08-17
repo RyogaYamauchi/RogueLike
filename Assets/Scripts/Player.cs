@@ -8,9 +8,13 @@ namespace Scripts
 
     public class Player : ICharacter
     {
+        [SerializeField]
+        private Animator _animator;
+        
         public void Init()
         {
             SetInitPosition();
+            transform.position = new Vector3(Position.x * 11,5,Position.y * 11);
             StartTurn();
         }
 
@@ -29,64 +33,76 @@ namespace Scripts
             {
                 if (Input.anyKey)
                 {
+                    //入力の待ち時間
                     yield return new WaitForSeconds(0.1f);
                     if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
                     {
                         StartCoroutine(UpperRight(
                             () => { CorrectCallback(1,1); },
-                            () => { StartCoroutine(StartMove()); }));
+                            () => { StartCoroutine(StartMove()); },
+                            gameObject));
                         yield break;
                     }
                     if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
                     {
                         StartCoroutine(UpperLeft(
                             () => { CorrectCallback(-1,1); },
-                            () => { StartCoroutine(StartMove()); }));
+                            () => { StartCoroutine(StartMove()); },
+                            gameObject));
                         yield break;
                     }
                     if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
                     {
                         StartCoroutine(BottomLeft(
                             () => { CorrectCallback(-1,-1); },
-                            () => { StartCoroutine(StartMove()); }));
+                            () =>
+                            {
+                                StartCoroutine(StartMove());},
+                            gameObject));
                         yield break;
                     }
                     if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
                     {
-                        StartCoroutine(BotttomRight(
+                        StartCoroutine(BottomRight(
                             () => { CorrectCallback(1,-1); },
-                            () => { StartCoroutine(StartMove()); }));
+                            () => { StartCoroutine(StartMove()); },
+                            gameObject));
                         yield break;
                     }
                     if (Input.GetKey(KeyCode.D))
                     {
                         StartCoroutine(MoveRight(
                             () => { CorrectCallback(1,0); },
-                            () => { StartCoroutine(StartMove()); }));
+                            () => { StartCoroutine(StartMove()); },
+                            gameObject));
                         yield break;
                     }
                     if (Input.GetKey(KeyCode.A))
                     {
                         StartCoroutine(MoveLeft(
                             () => { CorrectCallback(-1,0); },
-                            () => { StartCoroutine(StartMove()); }));
+                            () => { StartCoroutine(StartMove()); },
+                            gameObject));
                         yield break;
                     }
                     if (Input.GetKey(KeyCode.W))
                     {
                         StartCoroutine(MoveUp(
                             () => { CorrectCallback(0,+1); },
-                            () => { StartCoroutine(StartMove()); }));
+                            () => { StartCoroutine(StartMove()); },
+                            gameObject));
                         yield break;
                     }
                     if (Input.GetKey(KeyCode.S))
                     {
                         StartCoroutine(MoveDown(
                             () => { CorrectCallback(0,-1); }, 
-                            () => { StartCoroutine(StartMove()); }));
+                            () => { StartCoroutine(StartMove()); },
+                            gameObject));
                         yield break;
                     }
                 }
+                //フレーム調整
                 yield return new WaitForSeconds(0.05f);
             }
         }
@@ -99,7 +115,6 @@ namespace Scripts
                 StartCoroutine(GameController.Instance.field.GoUpTheStair());
                 return;
             }
-
             GameController.Instance.field.Cells.ArrayCells2D[Position.x, Position.y].OnState =
                 MasterFieldOnState.None;
             GameController.Instance.field.Cells.ArrayCells2D[Position.x+dx, Position.y+dy].OnState =

@@ -21,63 +21,75 @@ namespace Scripts
             {
                 _position = value;
                 CurrentRoomId = GameController.Instance.field.Cells.ArrayCells2D[value.x, value.y].ParcelId;
-                transform.position = new Vector3(value.x * 11, 5, value.y * 11);
             }
         }
         
-        protected IEnumerator MoveRight(Action correctAction,Action failedAction)
+        protected IEnumerator MoveRight(Action correctAction,Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x + 1, Position.y)))
             {
-                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
             }
+            Quaternion rot = Quaternion.AngleAxis(90.0f, new Vector3(0f,1.0f,0.0f));
+            obj.transform.rotation = rot;
+            obj.GetComponent<Animator>().SetTrigger("is_going");
+            yield return new WaitForSeconds(0.5f);
+
             Position = new Vector2Int(Position.x + 1, Position.y);
             correctAction?.Invoke(); 
         }
 
-        protected IEnumerator MoveLeft(Action correctAction,Action failedAction)
+        protected IEnumerator MoveLeft(Action correctAction,Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x - 1, Position.y)))
             {
-                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
             }
+            Quaternion rot = Quaternion.AngleAxis(-90.0f, new Vector3(0f,1.0f,0f));
+            obj.transform.rotation = rot;
+            obj.GetComponent<Animator>().SetTrigger("is_going");
+            yield return new WaitForSeconds(0.5f);
             correctAction?.Invoke();
             Position = new Vector2Int(Position.x - 1, Position.y);
         }
 
-        protected IEnumerator MoveUp(Action correctAction,Action failedAction)
+        protected IEnumerator MoveUp(Action correctAction,Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x, Position.y + 1)))
             {
-                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
             }
+            Quaternion rot = Quaternion.AngleAxis(0.0f, new Vector3(1f,0.0f,1.0f));
+            obj.transform.rotation = rot;
+            obj.GetComponent<Animator>().SetTrigger("is_going");
+            yield return new WaitForSeconds(0.5f);
             correctAction?.Invoke();
             Position = new Vector2Int(Position.x, Position.y + 1);
         }
 
-        protected IEnumerator MoveDown(Action correctAction,Action failedAction)
+        protected IEnumerator MoveDown(Action correctAction, Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x, Position.y - 1)))
             {
-                // TODO : アニメーションの作成
                 yield return new WaitForSeconds(0.3f);
                 failedAction?.Invoke();
                 yield break;
             }
+            Quaternion rot = Quaternion.AngleAxis(180.0f, new Vector3(0f,1.0f,0f));
+            obj.transform.rotation = rot;     
+            obj.GetComponent<Animator>().SetTrigger("is_going");
+            yield return new WaitForSeconds(0.5f);
             correctAction?.Invoke();
             Position = new Vector2Int(Position.x, Position.y - 1);
         }
 
-        protected IEnumerator UpperRight(Action correctAction, Action failedAction)
+        protected IEnumerator UpperRight(Action correctAction, Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x+1, Position.y + 1)))
             {
@@ -85,10 +97,15 @@ namespace Scripts
                 failedAction?.Invoke();
                 yield break;
             }
+
+            Quaternion rot = Quaternion.AngleAxis(45.0f, new Vector3(0f,1.0f,0.0f));
+            obj.transform.rotation = rot;         
+            obj.GetComponent<Animator>().SetTrigger("is_diagonal_going");
+            yield return new WaitForSeconds(0.5f);
             correctAction?.Invoke();
             Position = new Vector2Int(Position.x + 1, Position.y + 1);
         }
-        protected IEnumerator UpperLeft(Action correctAction, Action failedAction)
+        protected IEnumerator UpperLeft(Action correctAction, Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x - 1, Position.y + 1)))
             {
@@ -96,10 +113,15 @@ namespace Scripts
                 failedAction?.Invoke();
                 yield break;
             }
+
+            Quaternion rot = Quaternion.AngleAxis(-45.0f, new Vector3(0.0f,1.0f,0.0f));
+            obj.transform.rotation = rot;  
+            obj.GetComponent<Animator>().SetTrigger("is_diagonal_going");
+            yield return new WaitForSeconds(0.5f);
             correctAction?.Invoke();
             Position = new Vector2Int(Position.x - 1, Position.y + 1);
         }
-        protected IEnumerator BotttomRight(Action correctAction, Action failedAction)
+        protected IEnumerator BottomRight(Action correctAction, Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x + 1, Position.y - 1)))
             {
@@ -107,10 +129,15 @@ namespace Scripts
                 failedAction?.Invoke();
                 yield break;
             }
+
+            Quaternion rot = Quaternion.AngleAxis(135.0f, new Vector3(0f,1.0f,0.0f));
+            obj.transform.rotation = rot;          
+            obj.GetComponent<Animator>().SetTrigger("is_diagonal_going");
+            yield return new WaitForSeconds(0.5f);
             correctAction?.Invoke();
             Position = new Vector2Int(Position.x + 1, Position.y - 1);
         }
-        protected IEnumerator BottomLeft(Action correctAction, Action failedAction)
+        protected IEnumerator BottomLeft(Action correctAction, Action failedAction, GameObject obj)
         {
             if (OutOfRange(new Vector2Int(Position.x - 1, Position.y - 1)))
             {
@@ -118,6 +145,11 @@ namespace Scripts
                 failedAction?.Invoke();
                 yield break;
             }
+
+            Quaternion rot = Quaternion.AngleAxis(-135.0f, new Vector3(0f,1.0f,0f));
+            obj.transform.rotation = rot;        
+            obj.GetComponent<Animator>().SetTrigger("is_diagonal_going");
+            yield return new WaitForSeconds(0.5f);
             correctAction?.Invoke();
             Position = new Vector2Int(Position.x - 1, Position.y - 1);
         }

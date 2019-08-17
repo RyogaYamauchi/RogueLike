@@ -22,13 +22,6 @@ namespace Scripts
         {
             var enemies = GetComponentsInChildren<Enemy>();
             enemies.All(t => t.Die());
-//            if (EnemyDictionary != null)
-//            {
-//                foreach (var enemy in EnemyDictionary.Values)
-//                {
-//                    enemy.Die();
-//                }
-//            }
             EnemyDictionary= new Dictionary<int, Enemy>();
         }
 

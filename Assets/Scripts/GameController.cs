@@ -9,6 +9,7 @@ namespace Scripts
         public Field field;
         public Player player;
         public Enemies enemies;
+        public MainCamera mainCamera;
         
         public static GameController Instance { get; private set; }
 
@@ -31,7 +32,9 @@ namespace Scripts
             player.Init();
             enemies = GameObject.Find("Enemies").GetComponent<Enemies>();
             enemies.Init();
-            Instance.enemies.SpawnEnemy();
+            mainCamera = GameObject.Find("MainCamera").GetComponent<MainCamera>();
+            StartCoroutine(mainCamera.UpdateCameraOnPlayer());
+//            Instance.enemies.SpawnEnemy();
         }
     }
 }
