@@ -24,7 +24,7 @@ namespace Scripts
             var room = GameController.Instance.field.RoomsDictionary[roomId];
             var x = Random.Range(room.X, room.X + room.XRange);
             var y = Random.Range(room.Y, room.Y + room.YRange);
-            Position = new Vector2Int(x, y);
+            Position = new Vector2Int(x*11, y*11);
         }
 
         private IEnumerator StartMove()
